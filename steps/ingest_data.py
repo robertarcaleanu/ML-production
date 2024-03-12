@@ -21,7 +21,7 @@ class IngestData:
     
 
 @step
-def ingest_data(data_path: str) -> pd.DataFrame:
+def ingest_df(data_path: str) -> pd.DataFrame:
     """Ingesting the data from the data path
 
     Args:
