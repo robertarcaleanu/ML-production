@@ -7,7 +7,7 @@ This project consists of developing a Machine Learning model and deploying it in
 1. Create a virtual environment
 2. Install zenml `pip install zenml["server"]`
 3. Initialize zenml `zenml init`
-4. Execute zenml `zenml up`
+4. Execute zenml `zenml up` (we can stop the server with `zenml down`)
 5. Create folders:
     - src
     - pipeline
@@ -22,6 +22,6 @@ This project consists of developing a Machine Learning model and deploying it in
     - evaluation
 9. Creating a pipeline (`\pipeline` folder)
     - training pipeline
-
+10. We can test the pipeline by running the code `python run_pipeline.py`
 
 
