@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 from abc import ABC, abstractmethod
-from sklearn.metrics import mean_squared_error, r2_score, rm
+from sklearn.metrics import mean_squared_error, r2_score
 
 class Evaluation(ABC):
     """Abstract class defining strategy for evaluating our models"""

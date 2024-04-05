@@ -24,7 +24,7 @@ def train_model(
     """
     try:
         model = None
-        if config.model_name == "Linear Regression":
+        if config.model_name == "LinearRegression":
             model = LinearRegressionModel()
             train_model = model.train(X_train, y_train)
             return train_model

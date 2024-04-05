@@ -1,6 +1,7 @@
 import logging
 from abc import ABC, abstractmethod
-from typing import Union
+from typing import Union, Tuple
+from typing_extensions import Annotated
 
 import numpy as np
 import pandas as pd
@@ -54,7 +55,12 @@ class DataDivideStrategy(DataStrategy):
     """
     Divide data into train and test.
     """
-    def handle_data(self, data: pd.DataFrame) -> pd.DataFrame | pd.Series:
+    def handle_data(self, data: pd.DataFrame) -> Tuple[
+        Annotated[pd.DataFrame, "X_train"],
+        Annotated[pd.DataFrame, "X_test"],
+        Annotated[pd.DataFrame, "y_train"],
+        Annotated[pd.DataFrame, "y_test"],
+        ]:
         """
         Divide data into train and test.
         """
@@ -77,7 +83,7 @@ class DataCleaning:
         self.data = data
         self.strategy = strategy
 
-    def handle_data(self) -> pd.DataFrame | pd.Series:
+    def handle_data(self) -> Union[pd.DataFrame, pd.Series, Tuple]:
         """
         Handle data.
         """
