@@ -1,0 +1,1 @@
+MIN_ACCURACY = 0.25

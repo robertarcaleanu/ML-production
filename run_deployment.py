@@ -1,38 +1,59 @@
 import logging
+import uvicorn
+import conf
 
-from typing import Literal
+from pydantic import BaseModel
+from fastapi import FastAPI
 
 from pipelines.deployment_pipeline import (
     continuous_deployment_pipeline,
     inference_pipeline,
 )
 
+def create_app():
+    """Creating the FastAPI application
 
-def main(deployment_type: Literal["train", "predict"], min_accuracy: float):
-    """Run the pipeline."""
-    try:
-        if deployment_type == "train":
-            # Initialize a continuous deployment pipeline run
-            continuous_deployment_pipeline(
-                min_accuracy=min_accuracy,
-                workers=3,
-                timeout=60,
-            )
-    except Exception as e:
-        logging.error(f"Error in deploying {deployment_type} pipeline: {e}")
-        raise e
+    Args:
+        deployment_type (Literal[&quot;train&quot;, &quot;predict&quot;]): _description_
+        min_accuracy (float): _description_
+    """
     
-    try:
-        if deployment_type == "predict":
-            # Initialize an inference pipeline run
-            inference_pipeline(
-                pipeline_name="continuous_deployment_pipeline",
-                pipeline_step_name="mlflow_model_deployer_step",
-            )
-    except Exception as e:
-        logging.error(f"Error in deploying {deployment_type} pipeline: {e}")
-        raise e
+    class InputData(BaseModel):
+        # Define your input data schema
+        feature1: float
+        feature2: float
+        # Add more features as needed
+
+
+    app = FastAPI()
+    @app.post("/predict")
+    def predict(input_data: InputData):
+        try:
+            result = inference_pipeline(input_data)
+            return {"result": result}
+        except Exception as e:
+            logging.error("Error in predicting the result: {}".format(e))
+            raise e
+        
+
+    @app.post("/train")
+    def train():
+        try:
+            result = continuous_deployment_pipeline(conf.MIN_ACCURACY)
+            return result
+        except Exception as e:
+            logging.error("Error in training the model: {}".format(e))
+            raise e
+        
+    return app
+
+
+def main():
+    """Run the FastAPI application."""
+    app = create_app()
+
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 
 if __name__ == "__main__":
-    main(deployment_type="predict", min_accuracy=0.85)
+    main()
