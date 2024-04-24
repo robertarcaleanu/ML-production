@@ -1,5 +1,5 @@
-from zenml.steps import BaseParameters
+# from zenml.steps import BaseParameters
 
-class ModelNameConfig(BaseParameters):
+class ModelNameConfig():
     """Model configs"""
     model_name: str = "LinearRegression"
