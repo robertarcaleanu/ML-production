@@ -1,6 +1,6 @@
 import logging
 import pandas as pd
-from zenml import step
+# from zenml import step
 
 class IngestData:
     """Ingesting the data from the data_path
@@ -20,7 +20,7 @@ class IngestData:
         return pd.read_csv(self.data_path)
     
 
-@step
+# @step
 def ingest_df(data_path: str) -> pd.DataFrame:
     """Ingesting the data from the data path
 

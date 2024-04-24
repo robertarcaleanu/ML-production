@@ -2,18 +2,15 @@ import logging
 import pandas as pd
 
 
-from zenml import step
+# from zenml import step
 from sklearn.base import RegressorMixin
 from typing import Tuple
 from typing_extensions import Annotated
 from src.evaluation import MSE, R2, RMSE
 
-from zenml.client import Client
-
-experiment_tracker = Client().active_stack.experiment_tracker
 
 # @step(experiment_tracker=experiment_tracker.name)
-@step
+# @step
 def evaluate_model(model: RegressorMixin,
                    X_test: pd.DataFrame,
                    y_test: pd.DataFrame) -> Tuple[

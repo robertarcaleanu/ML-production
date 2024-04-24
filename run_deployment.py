@@ -40,9 +40,9 @@ def create_app():
     def train():
         try:
             result = continuous_deployment_pipeline(
-                data_path="",
+                data_path=conf.DATA_PATH,
                 min_accuracy=conf.MIN_ACCURACY,
-                model_path="")
+                model_path=conf.MODEL_PATH)
             
             return result
         except Exception as e:
