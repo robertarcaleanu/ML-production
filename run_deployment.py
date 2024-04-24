@@ -39,7 +39,11 @@ def create_app():
     @app.post("/train")
     def train():
         try:
-            result = continuous_deployment_pipeline(conf.MIN_ACCURACY)
+            result = continuous_deployment_pipeline(
+                data_path="",
+                min_accuracy=conf.MIN_ACCURACY,
+                model_path="")
+            
             return result
         except Exception as e:
             logging.error("Error in training the model: {}".format(e))
