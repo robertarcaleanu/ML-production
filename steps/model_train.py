@@ -4,7 +4,8 @@ import pandas as pd
 # from zenml import step
 from src.model_dev import LinearRegressionModel
 from sklearn.base import RegressorMixin
-from .config import ModelNameConfig
+# rom .config import ModelNameConfig
+from typing import Literal
 
 # @step
 def train_model(
@@ -12,7 +13,7 @@ def train_model(
     X_test: pd.DataFrame,
     y_train: pd.DataFrame,
     y_test: pd.DataFrame,
-    config: ModelNameConfig,
+    model_name: Literal["LinearRegression"],
 ) -> RegressorMixin:
     """Train the model on the ingested data
 
@@ -24,12 +25,12 @@ def train_model(
     """
     try:
         model = None
-        if config.model_name == "LinearRegression":
+        if model_name == "LinearRegression":
             model = LinearRegressionModel()
             train_model = model.train(X_train, y_train)
             return train_model
         else:
-            raise ValueError("Model {} not supported".format(config.model_name))
+            raise ValueError("Model {} not supported".format(model_name))
     except Exception as e:
-        logging.error("Error in training the model: {}".format(config.model_name))
+        logging.error("Error in training the model: {}".format(model_name))
         raise e

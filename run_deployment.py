@@ -20,8 +20,18 @@ def create_app():
     
     class InputData(BaseModel):
         # Define your input data schema
-        feature1: float
-        feature2: float
+        payment_sequential: float
+        payment_installments: float
+        payment_value: float
+        price: float
+        freight_value: float
+        product_name_lenght: float
+        product_description_lenght: float
+        product_photos_qty: float
+        product_weight_g: float
+        product_length_cm: float
+        product_height_cm: float
+        product_width_cm: float
         # Add more features as needed
 
 
@@ -29,7 +39,9 @@ def create_app():
     @app.post("/predict")
     def predict(input_data: InputData):
         try:
-            result = inference_pipeline(input_data)
+            result = inference_pipeline(
+                input_data.dict(), 
+                model_path=conf.MODEL_PATH)
             return {"result": result}
         except Exception as e:
             logging.error("Error in predicting the result: {}".format(e))
@@ -44,7 +56,7 @@ def create_app():
                 min_accuracy=conf.MIN_ACCURACY,
                 model_path=conf.MODEL_PATH)
             
-            return result
+            return {"result": result}
         except Exception as e:
             logging.error("Error in training the model: {}".format(e))
             raise e
@@ -55,7 +67,6 @@ def create_app():
 def main():
     """Run the FastAPI application."""
     app = create_app()
-
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 

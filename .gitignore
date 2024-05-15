@@ -1,3 +1,4 @@
 /datasets
 /.zen
 /mlruns
+.env
