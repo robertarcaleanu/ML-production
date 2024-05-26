@@ -1,4 +1,4 @@
-/datasets
+/app/datasets
 /.zen
 /mlruns
 .env
